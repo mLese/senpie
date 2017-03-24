@@ -29,12 +29,14 @@ public class Triangle {
     static final int COORDS_PER_VERTEX = 3;
     static float triangleCoords[];
 
+    public int endStep = -1;
+
     float color[] = { 0.0f, 0.5f, 0.0f, 1.0f };
 
-    public Triangle(float[] center, double degrees, float[] color, float radius) {
+    public Triangle(float[] center, double degrees, float[] color, float radius, int start, int smoothness) {
 
         int i = 0;
-        int triangleCount = 8;
+        int triangleCount = smoothness;
         float twicePi = (float)toRadians(degrees);
 
         triangleCoords = new float[3 * (triangleCount + 2)];
@@ -43,10 +45,11 @@ public class Triangle {
         triangleCoords[i++] = center[1];
         triangleCoords[i++] = 0.0f;
 
-        for (int j = 10; j <= triangleCount+10; j++) {
+        for (int j = start; j <= triangleCount + start; j++) {
             triangleCoords[i++] = center[0] + (float)(radius * cos(j * twicePi / triangleCount));
             triangleCoords[i++] = center[1] + (float)(radius * sin(j * twicePi / triangleCount));
             triangleCoords[i++] = 0.0f;
+            endStep = j;
         }
 
         this.color[0] = color[0];

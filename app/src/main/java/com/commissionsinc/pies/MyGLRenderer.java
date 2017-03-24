@@ -21,6 +21,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     float[] mPMatrix = new float[16];
 
     private ArrayList<Triangle> mTriangles;
+    private Triangle mHole;
     Random chaos;
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
@@ -29,17 +30,23 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         float[] pos = new float[2];
         float[] color = new float[3];
-        for (int i = 0; i < 500; i++) {
-            pos[0] = chaos.nextFloat()/2.0f;
-            pos[1] = chaos.nextFloat()/2.0f;
+        int endStep = 0;
+        int parts = 20;
+        for (int i = 0; i < parts; i++) {
+            pos[0] = 0.0f;
+            pos[1] = 0.0f;
 
             if (chaos.nextBoolean()) pos[0] *= -1;
             if (chaos.nextBoolean()) pos[1] *= -1;
+
             color[0] = chaos.nextFloat();
             color[1] = chaos.nextFloat();
             color[2] = chaos.nextFloat();
-            mTriangles.add(new Triangle(pos.clone(), chaos.nextInt(360), color.clone(), chaos.nextFloat()/2.0f));
+
+            mTriangles.add(new Triangle(pos.clone(), 360/parts, color.clone(), 0.6f, endStep, 10));
+            endStep = mTriangles.get(i).endStep;
         }
+        mHole = new Triangle(new float[] { 0.0f, 0.0f, 0.1f}, 360, new float[] { 0.0f, 0.0f, 0.0f}, 0.3f, 0, 100);
     }
 
     public void onDrawFrame(GL10 unused) {
@@ -49,6 +56,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         for (Triangle t : mTriangles) {
             t.draw(mMVPMatrix);
         }
+        mHole.draw(mMVPMatrix);
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
