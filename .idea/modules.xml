@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Pies.iml" filepath="$PROJECT_DIR$/Pies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/senpie/senpie.iml" filepath="$PROJECT_DIR$/senpie/senpie.iml" />
+    </modules>
+  </component>
+</project>
